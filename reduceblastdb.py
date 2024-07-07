@@ -3,27 +3,13 @@
 """
 Created on Wed Jul 29 14:41:39 2020
 
-@author: avierstr
-"""
-'''
+@author: Andy.Vierstraete@ugent.be
+
 Download a database from NCBI
 Reduce Nucleotide or protein database from NCBI for faster local Blast searches 
 by doing size selection and/or removing duplicate sequences
+"""
 
-
-nt database is 445 GB in the uncompressed BLAST database format
-selection all species from the nt database: fasta is 1,4 TB
-    file with taxid's is 16,5 MB
-    file with acc, taxid, len, seqid is  4,2 GB
-size select all species with max length 20 kb: fasta is 206 GB (14,7%)
-
-
-selection all bacteria from the nt database: fasta is 215 GB
-size select all bacteria with max length 20 kb: fasta is 7 GB (3,3%)
-
-
-
-'''
 from Bio import SeqIO
 import sys
 import socket
@@ -86,42 +72,39 @@ unknown = ['unidentified', 'unknown', 'unspecified', 'untyped', 'ungrouped',
 # barley, bacterium enrichment, archaeon enrichment, anammox bacterium enrichment, \
 #     alpha proteobacterium enrichment, activated sludge, actinobacterium enrichment)]
 
-version = '2024-07-08'  # version of the script
+version = '2024-07-04'  # version of the script
 #==============================================================================
-# def check_version(version):
-#     try:   
-#         link = urllib.request.urlopen('https://github.com/avierstr/amplicon_sorter'\
-#                                       '/blob/master/amplicon_sorter.py').read()
-#         # find the version-date part of the last version on the webpage
-#         datepart = re.compile(r'(version.*?)(\d{4}-\d{2}-\d{2})(.*version of the script)')
-#         x = datepart.search(str(link))
-#         # the 2nd group of the search is the date
-#         latest_version = x.group(2)
-#         # compare the date of this version with the version on the webpage
-#         if version < latest_version:
-#             version_name = 'amplicon_sorter_' + latest_version + '.py' 
-#             # download latest version
-#             urllib.request.urlopen('https://raw.githubusercontent.com/avierstr/'
-#                                    'amplicon_sorter/master/amplicon_sorter.py')
-#             urllib.request.urlretrieve('https://raw.githubusercontent.com/avierstr'
-#                                        '/amplicon_sorter/master/amplicon_sorter.py',
-#                                        version_name)
-#             print('\n =====================================================\n'
-#                   '| NEW VERSION OF AMPLICON_SORTER AVAILABLE            |\n'
-#                   '| https://github.com/avierstr/amplicon_sorter         |\n'
-#                   '| Downloaded latest version as:                       |\n' 
-#                   '|      ' + version_name + '                  |\n'
-#                   '| Press ctrl-c to exit                                |\n'
-#                   ' =====================================================\n')
-#             t = 10
-#             while t > 0:
-#                 print('Will continue in ' + str(t) + ' seconds...', end='\r')
-#                 time.sleep(1)
-#                 t -= 1
-#             # to clear previous line completely   
-#             print('                                                ', end='\r') 
-#     except:
-#         pass
+def check_version(version):
+    try:   
+        link = urllib.request.urlopen('https://github.com/avierstr/reduceblastdb/blob/main/reduceblastdb.py').read()
+        # find the version-date part of the last version on the webpage
+        datepart = re.compile(r'(version.*?)(\d{4}-\d{2}-\d{2})(.*version of the script)')
+        x = datepart.search(str(link))
+        # the 2nd group of the search is the date
+        latest_version = x.group(2)
+        # compare the date of this version with the version on the webpage
+        if version < latest_version:
+            version_name = 'reduceblastdb_' + latest_version + '.py' 
+            # download latest version
+            urllib.request.urlopen('https://raw.githubusercontent.com/avierstr/reduceblastdb/main/reduceblastdb.py')
+            urllib.request.urlretrieve('https://raw.githubusercontent.com/avierstr/reduceblastdb/main/reduceblastdb.py',
+                                        version_name)
+            print('\n =====================================================\n'
+                  '| NEW VERSION OF reduceblastdb AVAILABLE              |\n'
+                  '| https://github.com/avierstr/reduceblastdb           |\n'
+                  '| Downloaded latest version as:                       |\n' 
+                  '|      ' + version_name + '                    |\n'
+                  '| Press ctrl-c to exit                                |\n'
+                  ' =====================================================\n')
+            t = 10
+            while t > 0:
+                print('Will continue in ' + str(t) + ' seconds...', end='\r')
+                time.sleep(1)
+                t -= 1
+            # to clear previous line completely   
+            print('                                                ', end='\r') 
+    except:
+        pass
 #------------------------------------------------------------------------------
 def arguments():
     parser = argparse.ArgumentParser(description='Reduceblastdb: script to reduce NCBI \
@@ -1487,8 +1470,9 @@ def make_blast_db(outpfile):
     os.remove(os.path.join(outfolder, outpfile + '_dbtype.tmp'))
 #==============================================================================
 if __name__ == '__main__':
+    check_version(version)
     args = arguments()
-        
+
     if args.subparser_name == 'tax':
         folder = args.outfolder
         # create an outputfolder
@@ -1593,22 +1577,3 @@ if __name__ == '__main__':
         
         if args.makeblastdb is True:
             make_blast_db(outpfile)
-            
-        # at the end of the script: cleanup
-    
-        """
-        -een algemene naam voor unique en removed (nt of nr) : OK
-        -check indien een progress bezig was : OK
-        -kleine resultfile maken met hoeveel seq in begin, tussenstappen, hoeveel op einde
-        -nodig om ranges mogelijk te maken ??
-        -nodig om folder te kunnen geven waar nt database staat ? OK
-        -dbtype.tmp moet naam van outpf krijgen: OK
-        -remove en uniqueset in txt formaat files moeten ook naam van outpf krijgen: OK
-        -os.replace gebruiken ipv os.rename OK
-        -mogelijk om meerdere processen te starten ?  OK
-        - nog grote files opsplitsen in kleinere voor het reducen begint OK
-        - selectie voor taxid_list mogelijk maken en save met outputname OK
-        -downloaden in subfolder mogelijk maken ? OK
-        -update checken
-        - pickle files downloaden
-        """
