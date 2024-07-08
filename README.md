@@ -3,10 +3,10 @@
 reduceblastdb, a tool for reducing the BLAST databases based on taxonomy, sequence length and optional removing highly similar sequences from each species.
 
 **As an initial indication of sizes:**
-nt database: 445 GB
-Bacteria: 55 GB
-Bacteria max 2000 bp: 3.6 GB
 
+ - nt database: 445 GB 
+ - Bacteria: 55 GB 
+ - Bacteria max 2000 bp: 3.6 GB
 
 (Only works on Linux and Mac because it uses multiprocessing. Mac with M1 processor can cause problems)
 
