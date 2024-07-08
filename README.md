@@ -2,6 +2,12 @@
 
 reduceblastdb, a tool for reducing the BLAST databases based on taxonomy, sequence length and optional removing highly similar sequences from each species.
 
+**As an initial indication of sizes:**
+nt database: 445 GB
+Bacteria: 55 GB
+Bacteria max 2000 bp: 3.6 GB
+
+
 (Only works on Linux and Mac because it uses multiprocessing. Mac with M1 processor can cause problems)
 
 **Requirements:**
@@ -124,7 +130,6 @@ If they are not covered in the list below, you can enter all the variations for 
 ['ef1', 'TEF', 'elongation factor 1', 'elongation factor alpha', 'EF-1']
 
 
-
 **Unknown sequences** can be excluded. This is open for discussion. For now it will exclude all entries where the title begins with \['unidentified', 'unknown', 'unspecified', 'untyped', 'ungrouped', 'undetermined', 'undescribed', 'uncultured', 'uncultivated', 'unclassified'\].
 
     python3 reduceblastdb.py blastdb -db nt -of nt_database -o bacteria -s bacteria -u
@@ -148,11 +153,6 @@ The last step is to **create a new Blast database** from the selected or reduced
 All the above commands can be performed in one go:
 
     python3 reduceblastdb.py blastdb -db nt -dl -o bacteria -s bacteria -max 2000 -r -np 8 -mbd
-
-As an initial indication of sizes:
-nt database: 445 GB
-Bacteria: 55 GB
-Bacteria max 2000 bp: 3.6 GB
 
 **Taxonomy:**
 
