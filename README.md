@@ -194,12 +194,15 @@ If you want to produce an **alphabetic list** with everything from the order Odo
 
 Partial screenshot:
 
+![treelist](https://github.com/avierstr/reduceblastdb/blob/main/reduceblastdb_2.jpg)
 
 If you want the same with a more **tree-like** look for the order Odonata:
 
     python3 reduceblastdb.py tax -tt odonata
 
 Partial screenshot:
+
+![tree](https://github.com/avierstr/reduceblastdb/blob/main/reduceblastdb_1.jpg)
 
 **Release notes:**
 
