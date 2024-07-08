@@ -72,7 +72,7 @@ unknown = ['unidentified', 'unknown', 'unspecified', 'untyped', 'ungrouped',
 # barley, bacterium enrichment, archaeon enrichment, anammox bacterium enrichment, \
 #     alpha proteobacterium enrichment, activated sludge, actinobacterium enrichment)]
 
-version = '2024-07-04'  # version of the script
+version = '2024-07-08'  # version of the script
 #==============================================================================
 def check_version(version):
     try:   
@@ -119,7 +119,8 @@ def arguments():
     taxparser = subparsers.add_parser('tax', help='type "tax --help" for more information about \
                                       taxonomy options')
     taxparser.add_argument('-of', '--outfolder', required=False, 
-                        help='Name of the output folder to save the taxonmomy files')
+                        help='Name of the output folder to save the taxonmomy files.  \
+                            If none is given, current working directory is used.')
     taxparser.add_argument('-tl', '--taxidlist', required=False, nargs='*',
                         help='Create a TaxID list from NCBI with name, taxid and rank \
                             in alfabatic order (fast). List is in csv format. \
@@ -151,7 +152,7 @@ def arguments():
     dbparser.add_argument('-of', '--outfolder', required=False, 
                         help='Name of the output folder to save the database and create custom \
                             databases.  Custom created databases will be saved in the subfolder \
-                            "reduced"')
+                            "reduced".  If none is given, current working directory is used.')
     dbparser.add_argument('-min', '--minlength', type = int, required=False,
                         help='Minimum sequence length')
     dbparser.add_argument('-max', '--maxlength', type = int, required=False,
@@ -1008,7 +1009,7 @@ def split_big_files():
                                     outf = inf.replace('tax_id', 'tax_id_' + str(i) + '_' )
                                     with open(outf, 'a') as outputfile:
                                         SeqIO.write(record, outputfile, "fasta")
-                os.rename(os.path.join(dirpath, name), os.path.join(dirpath, name.replace('.spec', '.speci')))
+                os.remove(os.path.join(dirpath, name))
 #------------------------------------------------------------------------------
 # def download_pickles():
 #     try:   
@@ -1577,3 +1578,4 @@ if __name__ == '__main__':
         
         if args.makeblastdb is True:
             make_blast_db(outpfile)
+            
