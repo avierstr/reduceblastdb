@@ -15,9 +15,9 @@ reduceblastdb, a tool for reducing the BLAST databases based on taxonomy, sequen
 -   edlib: Lightweight, super fast C/C++ library for sequence alignment using edit (Levenshtein) distance ([https://pypi.org/project/edlib/#description](https://pypi.org/project/edlib/#description))  
     (`python3 -m pip install edlib`)
 -   biopyton (`sudo apt-get install python3-biopython`)
--   Blast executables (https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/)
- 
-**Options:**
+-   Blast executables (https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/) (I am noticing differences in number of sequences that are processed depending on the version the Blast executables (2.12 and 2.15), so best to install the latest version!)
+  
+ **Options:**
 
 There are 2 parts with options: **blastdb**  and **taxonomy**. **Blastdb** is to select parts of the blast databases to create a smaller local database. **Taxonomy** is to get information about the NCBI classification.
 
